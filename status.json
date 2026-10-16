@@ -1,6 +1,6 @@
 {
   "customer-service": false,
-  "data-agent": true,
+  "data-agent": false,
   "operation-assistant": false,
   "octop-plugin": true,
   "knowledge-base": false
