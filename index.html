@@ -331,7 +331,7 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
     </div>
 
     <div class="projects">
-      <article class="proj fade" data-health="" data-idle="按需启动" id="p-data-agent">
+      <article class="proj fade" data-health="" data-idle="按需启动" data-status-id="data-agent" id="p-data-agent">
         <div class="proj-visual" style="background:linear-gradient(135deg,#6366f1,#38bdf8)">
           <div class="proj-no">01</div>
           <div>
@@ -356,7 +356,7 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
           </div>
         </div>
       </article>
-      <article class="proj fade" data-health="" data-idle="按需启动" id="p-knowledge-base">
+      <article class="proj fade" data-health="" data-idle="按需启动" data-status-id="knowledge-base" id="p-knowledge-base">
         <div class="proj-visual" style="background:linear-gradient(135deg,#0ea5e9,#14b8a6)">
           <div class="proj-no">02</div>
           <div>
@@ -381,7 +381,7 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
           </div>
         </div>
       </article>
-      <article class="proj fade" data-health="" data-idle="按需启动" id="p-customer-service">
+      <article class="proj fade" data-health="" data-idle="按需启动" data-status-id="customer-service" id="p-customer-service">
         <div class="proj-visual" style="background:linear-gradient(135deg,#f43f5e,#fb923c)">
           <div class="proj-no">03</div>
           <div>
@@ -406,7 +406,7 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
           </div>
         </div>
       </article>
-      <article class="proj fade" data-health="" data-idle="按需启动" id="p-operation-assistant">
+      <article class="proj fade" data-health="" data-idle="按需启动" data-status-id="operation-assistant" id="p-operation-assistant">
         <div class="proj-visual" style="background:linear-gradient(135deg,#f59e0b,#f43f5e)">
           <div class="proj-no">04</div>
           <div>
@@ -431,7 +431,7 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
           </div>
         </div>
       </article>
-      <article class="proj fade" data-health="" data-idle="已部署" id="p-octop-plugin">
+      <article class="proj fade" data-health="" data-idle="已部署" data-status-id="octop-plugin" id="p-octop-plugin">
         <div class="proj-visual" style="background:linear-gradient(135deg,#10b981,#0ea5e9)">
           <div class="proj-no">05</div>
           <div>
@@ -536,14 +536,28 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
     t.textContent = text;
   }
 
-  function probe(card) {
+  // 状态探测：优先读 GitHub Actions 定时写入的 status.json（HTTPS，无混合内容问题）。
+  // 兜底：json 取不到（首次部署还没生成、或网络问题）时，回退到原有的
+  // no-cors 直连探测（但 http 地址在 https 页面下会被浏览器拦截，基本探测不到，
+  // 所以兜底只对 http://localhost 这类地址有效，这里仅作降级保护）。
+  var STATUS_JSON = 'https://raw.githubusercontent.com/ljl3133892273-png/portfolio/main/status.json';
+
+  function applyStatus(card, online) {
+    var idle = card.getAttribute('data-idle') || '按需启动';
+    if (online) {
+      setStatus(card, 'on', '在线');
+    } else {
+      setStatus(card, 'off', idle);
+    }
+  }
+
+  function probeFallback(card) {
     var url = card.getAttribute('data-health');
     if (!url) { setStatus(card, '', card.getAttribute('data-idle') || '按需启动'); return; }
     var done = false;
     var timer = setTimeout(function () {
       if (done) return; done = true; setStatus(card, 'off', '未启动');
     }, 3500);
-    // no-cors：只要能连上就算在线，避免跨域导致误判
     fetch(url, { mode: 'no-cors', cache: 'no-store' })
       .then(function () {
         if (done) return; done = true; clearTimeout(timer);
@@ -555,7 +569,27 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
       });
   }
 
-  Array.prototype.forEach.call(document.querySelectorAll('.proj'), probe);
+  function applyStatusMap(cards) {
+    fetch(STATUS_JSON, { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (map) {
+        Array.prototype.forEach.call(cards, function (card) {
+          var id = card.getAttribute('data-status-id');
+          if (id && typeof map[id] === 'boolean') {
+            applyStatus(card, map[id]);
+          } else {
+            // json 里没有这个 id（可能是新增项目），回退直连探测
+            probeFallback(card);
+          }
+        });
+      })
+      .catch(function () {
+        // json 取不到：全部回退直连探测
+        Array.prototype.forEach.call(cards, probeFallback);
+      });
+  }
+
+  applyStatusMap(Array.prototype.slice.call(document.querySelectorAll('.proj')));
 })();
 </script>
 </body>
