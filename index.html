@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>刘家良 · AI 应用开发 / FDE · 项目作品集</title>
+<meta name="description" content="刘家良的 AI 应用开发项目作品集：NL2SQL 问数、RAG 知识库、多智能体、智能客服、电商运营助手。">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:#f8fafc;color:#334155;line-height:1.7;
+  font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,-apple-system,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+code{background:#eef2ff;color:#4338ca;padding:1px 6px;border-radius:5px;
+  font-size:12.5px;font-family:ui-monospace,Consolas,monospace;word-break:break-all}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.ic{flex:none}
+
+/* 顶部导航 */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(255,255,255,.82);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid #e0e7ff}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:baseline;gap:8px;font-weight:800;font-size:19px;letter-spacing:-.02em}
+.brand b{color:#4f46e5}
+.brand span{font-size:11px;font-weight:600;color:#4f46e5;background:#eef2ff;padding:3px 9px;border-radius:999px}
+.nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0;font-size:14px;font-weight:500}
+.nav ul a{color:#475569;transition:color .2s}
+.nav ul a:hover{color:#4f46e5}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:11px 22px;border-radius:999px;font-size:14px;font-weight:600;
+  border:1px solid transparent;cursor:pointer;transition:all .22s;white-space:nowrap}
+.btn-primary{background:#4f46e5;color:#fff;box-shadow:0 8px 22px rgba(79,70,229,.28)}
+.btn-primary:hover{background:#4338ca;transform:translateY(-2px)}
+.btn-ghost{background:#fff;color:#4f46e5;border-color:#c7d2fe}
+.btn-ghost:hover{border-color:#6366f1;background:#eef2ff}
+.menu-btn{display:none;background:none;border:none;color:#475569;cursor:pointer;padding:6px}
+.m-menu{display:none;background:rgba(255,255,255,.97);border-top:1px solid #e0e7ff;padding:14px 24px 20px}
+.m-menu ul{list-style:none;margin:0;padding:0}
+.m-menu li a{display:block;padding:10px 0;color:#475569;font-weight:500}
+.m-menu.open{display:block}
+
+/* Hero */
+.hero{position:relative;padding:132px 0 76px;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(72px);pointer-events:none}
+.b1{width:420px;height:420px;background:#c7d2fe;opacity:.55;top:-90px;right:-90px}
+.b2{width:340px;height:340px;background:#bae6fd;opacity:.5;top:170px;left:-120px}
+.b3{width:300px;height:300px;background:#fecdd3;opacity:.35;bottom:-60px;right:28%}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:52px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;color:#4f46e5;
+  background:#eef2ff;padding:7px 15px;border-radius:999px;margin-bottom:20px}
+.dot{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.16)}
+h1{margin:0 0 16px;font-size:clamp(26px,4.6vw,46px);line-height:1.24;
+  font-weight:800;color:#0f172a;letter-spacing:-.025em;word-break:break-word}
+.grad{background:linear-gradient(100deg,#4f46e5,#0ea5e9);-webkit-background-clip:text;
+  background-clip:text;color:transparent}
+.lead{font-size:16.5px;color:#64748b;max-width:560px;margin:0 0 30px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px;max-width:470px}
+.stat{background:#fff;border-radius:18px;padding:17px 14px;text-align:center;
+  box-shadow:0 8px 26px rgba(79,70,229,.09);transition:transform .22s}
+.stat:hover{transform:translateY(-3px)}
+.stat b{display:block;font-size:23px;font-weight:800;color:#4f46e5;letter-spacing:-.02em}
+.stat small{font-size:12px;color:#64748b}
+.card-id{position:relative;background:#fff;border-radius:26px;padding:38px 30px;text-align:center;
+  box-shadow:0 22px 50px rgba(79,70,229,.16)}
+.avatar{width:104px;height:104px;border-radius:50%;margin:0 auto 20px;
+  background:linear-gradient(135deg,#4f46e5,#38bdf8);display:flex;align-items:center;
+  justify-content:center;color:#fff;font-size:38px;font-weight:800}
+.card-id h3{margin:0 0 6px;font-size:21px;font-weight:800;color:#0f172a}
+.card-id p{margin:0;font-size:13.5px;color:#64748b}
+.chipline{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:20px}
+.chip{font-size:11.5px;font-weight:600;padding:5px 11px;border-radius:999px;
+  background:#eef2ff;color:#4f46e5}
+
+/* 区块 */
+section{padding:74px 0}
+.sec-head{text-align:center;margin-bottom:46px}
+.sec-tag{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.16em;
+  text-transform:uppercase;color:#4f46e5;background:#eef2ff;padding:6px 15px;border-radius:999px;margin-bottom:14px}
+.sec-head h2{margin:0 0 12px;font-size:clamp(24px,3.2vw,32px);font-weight:800;
+  color:#0f172a;letter-spacing:-.02em}
+.rule{width:62px;height:4px;border-radius:999px;margin:0 auto;
+  background:linear-gradient(90deg,#4f46e5,#38bdf8)}
+.sec-sub{color:#64748b;max-width:640px;margin:16px auto 0;font-size:15px}
+
+/* 技能 */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.skill{background:#fff;border-radius:20px;padding:26px;box-shadow:0 8px 26px rgba(79,70,229,.07);
+  border:1px solid #eef2ff;transition:all .22s}
+.skill:hover{box-shadow:0 16px 38px rgba(79,70,229,.14);transform:translateY(-3px)}
+.skill-ico{width:46px;height:46px;border-radius:13px;background:#eef2ff;color:#4f46e5;
+  display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.skill h3{margin:0 0 13px;font-size:16.5px;font-weight:800;color:#0f172a}
+.tags{display:flex;flex-wrap:wrap;gap:7px}
+.tag{font-size:12px;font-weight:600;padding:5px 11px;border-radius:8px;background:#f1f5f9;color:#475569}
+
+/* 项目卡片 */
+.projects{display:grid;gap:26px}
+.proj{background:#fff;border-radius:24px;overflow:hidden;border:1px solid #eef2ff;
+  box-shadow:0 10px 30px rgba(79,70,229,.08);transition:all .25s;
+  display:grid;grid-template-columns:290px 1fr}
+.proj:hover{box-shadow:0 20px 48px rgba(79,70,229,.16);transform:translateY(-4px)}
+.proj-visual{position:relative;padding:28px;display:flex;flex-direction:column;justify-content:space-between;color:#fff}
+.proj-no{font-size:38px;font-weight:800;opacity:.32;letter-spacing:-.04em;line-height:1}
+.proj-ico{width:62px;height:62px;border-radius:19px;background:rgba(255,255,255,.22);
+  display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.3)}
+.proj-group{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;opacity:.9}
+.proj-body{padding:28px 30px}
+.proj-head{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:6px}
+.proj-head h3{margin:0;font-size:20px;font-weight:800;color:#0f172a;letter-spacing:-.02em}
+.proj-sub{font-size:13.5px;color:#94a3b8;font-weight:500;margin:0 0 13px}
+.proj-sum{font-size:14.5px;color:#64748b;margin:0 0 18px}
+.hl{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:8px}
+.hl li{position:relative;padding-left:22px;font-size:13.5px;color:#475569}
+.hl li::before{content:"";position:absolute;left:5px;top:9px;width:7px;height:7px;
+  border-radius:50%;background:linear-gradient(135deg,#6366f1,#38bdf8)}
+.proj-foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  padding-top:18px;border-top:1px dashed #e2e8f0}
+.spacer{flex:1 1 auto}
+
+/* 状态徽章 */
+.status{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;
+  padding:5px 11px;border-radius:999px;background:#f1f5f9;color:#64748b;
+  border:1px solid #e2e8f0;transition:all .2s}
+.status i{width:6px;height:6px;border-radius:50%;background:#94a3b8;transition:all .2s}
+.status.on{background:#ecfdf5;color:#059669;border-color:#a7f3d0}
+.status.on i{background:#10b981;box-shadow:0 0 0 3px rgba(16,185,129,.2)}
+.status.off{background:#fef2f2;color:#dc2626;border-color:#fecaca}
+.status.off i{background:#ef4444}
+.btn-sm{padding:9px 17px;font-size:13px;border-radius:10px}
+.btn-dis{background:#f1f5f9;color:#94a3b8;border:1px dashed #cbd5e1;cursor:not-allowed}
+.btn-dis:hover{transform:none;background:#f1f5f9}
+
+/* 联系方式 */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+.c-item{display:flex;align-items:center;gap:16px;background:#f8fafc;border-radius:18px;
+  padding:19px;transition:all .22s;border:1px solid transparent}
+.c-item:hover{background:#eef2ff;border-color:#c7d2fe;transform:translateX(4px)}
+.c-ico{width:46px;height:46px;border-radius:13px;background:#eef2ff;color:#4f46e5;
+  display:flex;align-items:center;justify-content:center;flex:none}
+.c-item b{display:block;font-size:14.5px;color:#0f172a;font-weight:700}
+.c-item small{font-size:13px;color:#64748b;word-break:break-all}
+.banner{background:linear-gradient(135deg,#4f46e5,#0ea5e9);color:#fff;border-radius:22px;
+  padding:30px;box-shadow:0 16px 40px rgba(79,70,229,.26)}
+.banner h3{margin:0 0 10px;font-size:19px;font-weight:800}
+.banner p{margin:0 0 20px;font-size:14px;opacity:.93}
+.banner .btn{background:#fff;color:#4f46e5;width:100%}
+.banner .btn:hover{background:#eef2ff;transform:translateY(-2px)}
+
+/* 页脚 */
+footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
+.foot{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.foot a:hover{color:#fff}
+
+/* 提示条 */
+.tip{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:14px;
+  padding:13px 17px;font-size:13px;margin-bottom:26px;display:flex;gap:10px;align-items:flex-start}
+
+/* 动画 */
+.fade{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+.fade.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .fade{opacity:1;transform:none;transition:none}
+  .proj:hover,.skill:hover,.stat:hover{transform:none}
+}
+
+/* 响应式 */
+@media (max-width:900px){
+  .wrap{padding:0 18px}
+  .hero{padding:112px 0 60px}
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .lead{font-size:15.5px}
+  .proj{grid-template-columns:1fr}
+  .proj-visual{flex-direction:row;align-items:center;justify-content:flex-start;
+    gap:18px;padding:20px 24px}
+  .proj-visual>div:last-child{display:flex;align-items:center;gap:14px}
+  .proj-ico{width:50px;height:50px;border-radius:15px}
+  .proj-group{margin-top:0 !important}
+  .proj-no{font-size:30px}
+  .contact-grid{grid-template-columns:1fr}
+  .nav ul,.nav a.btn-primary{display:none}
+  .menu-btn{display:block}
+  .card-id{padding:30px 22px}
+}
+@media (max-width:520px){
+  .stats{grid-template-columns:repeat(3,1fr);gap:9px}
+  .stat{padding:13px 8px}
+  .stat b{font-size:19px}
+  .stat small{font-size:11px}
+  .proj-body{padding:20px}
+  .proj-foot .btn{flex:1 1 auto;justify-content:center}
+  .proj-foot .spacer{display:none}
+  .cta .btn{flex:1 1 100%}
+  .banner{padding:24px 20px}
+  .card-id{padding:26px 18px}
+  .avatar{width:86px;height:86px;font-size:32px}
+  .chipline .chip{font-size:11px;padding:4px 9px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a href="#top" class="brand"><b>刘家良</b><span>AI 应用开发 / FDE</span></a>
+    <ul>
+      <li><a href="#about">关于我</a></li>
+      <li><a href="#skills">技术栈</a></li>
+      <li><a href="#works">项目作品</a></li>
+      <li><a href="#contact">联系方式</a></li>
+    </ul>
+    <a class="btn btn-primary" href="#works">查看项目</a>
+    <button class="menu-btn" id="menuBtn" aria-label="打开菜单">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="m-menu" id="mMenu">
+    <ul>
+      <li><a href="#about">关于我</a></li>
+      <li><a href="#skills">技术栈</a></li>
+      <li><a href="#works">项目作品</a></li>
+      <li><a href="#contact">联系方式</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span>目前可到岗 · 求职中</div>
+      <h1>我是 <span class="grad">刘家良</span><br>把大模型能力落到能跑通的业务系统里</h1>
+      <p class="lead">专注大模型应用工程：NL2SQL 问数、RAG 知识库、多智能体编排、智能客服与电商运营自动化。习惯从需求拆解一路做到部署上线，用 Docker 把服务交付成可访问、可演示的系统。</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#works"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3.5 1.6 5.5 5 5.5 8.8L16 17H8l-1.5-5.7C6.5 7.5 8.5 4.1 12 2.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4.5M16 17l2 4.5"/></svg> 查看我的项目</a>
+        <a class="btn btn-ghost" href="#contact"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3 7l9 6 9-6"/></svg> 联系我</a>
+      </div>
+      <div class="stats"><div class="stat"><b>5</b><small>完整项目</small></div><div class="stat"><b>20+</b><small>技术栈</small></div><div class="stat"><b>全栈</b><small>从需求到部署</small></div></div>
+    </div>
+    <div>
+      <div class="card-id">
+        <div class="avatar">刘</div>
+        <h3>刘家良</h3>
+        <p>AI 应用开发 / FDE</p>
+        <div class="chipline"><span class="chip">LangGraph</span><span class="chip">RAG</span><span class="chip">NL2SQL</span><span class="chip">FastAPI</span><span class="chip">Docker</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head fade">
+      <span class="sec-tag">About Me</span>
+      <h2>关于我</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="skills">
+      <div class="skill fade">
+        <div class="skill-ico"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 4.2A3.2 3.2 0 006.3 7.4 3 3 0 004.5 13a3 3 0 001.9 4.6A3.1 3.1 0 009.5 20a2.4 2.4 0 002.5-2.4V6.6a2.4 2.4 0 00-2.5-2.4z"/><path d="M14.5 4.2a3.2 3.2 0 013.2 3.2A3 3 0 0119.5 13a3 3 0 01-1.9 4.6A3.1 3.1 0 0114.5 20a2.4 2.4 0 01-2.5-2.4"/></svg></div>
+        <h3>大模型应用工程</h3>
+        <p style="font-size:14px;color:#64748b;margin:0">不只调用 API，更关注 RAG 召回质量、Agent 任务分解、
+        SQL 生成的准确率与可控性，把「能用」做成「好用」。</p>
+      </div>
+      <div class="skill fade">
+        <div class="skill-ico"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6.5" rx="2"/><rect x="3" y="13.5" width="18" height="6.5" rx="2"/><path d="M7 7.2h.01M7 16.7h.01"/></svg></div>
+        <h3>完整工程能力</h3>
+        <p style="font-size:14px;color:#64748b;margin:0">从数据库设计、接口开发、任务队列到前端交互全部独立完成，
+        每个项目都是可部署、可演示的完整系统，而非代码片段。</p>
+      </div>
+      <div class="skill fade">
+        <div class="skill-ico"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></div>
+        <h3>交付与部署意识</h3>
+        <p style="font-size:14px;color:#64748b;margin:0">用 Docker Compose 编排多服务依赖，
+        关注健康检查、开机自启与线上可访问性，让项目真正「交付」而不是停在本机。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" style="background:linear-gradient(180deg,#f8fafc,#eff6ff)">
+  <div class="wrap">
+    <div class="sec-head fade">
+      <span class="sec-tag">Tech Stack</span>
+      <h2>技术栈</h2>
+      <div class="rule"></div>
+      <p class="sec-sub">覆盖大模型应用、后端、数据中间件、前端与部署运维的完整链路</p>
+    </div>
+    <div class="skills">
+      <div class="skill fade">
+        <div class="skill-ico"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 4.2A3.2 3.2 0 006.3 7.4 3 3 0 004.5 13a3 3 0 001.9 4.6A3.1 3.1 0 009.5 20a2.4 2.4 0 002.5-2.4V6.6a2.4 2.4 0 00-2.5-2.4z"/><path d="M14.5 4.2a3.2 3.2 0 013.2 3.2A3 3 0 0119.5 13a3 3 0 01-1.9 4.6A3.1 3.1 0 0114.5 20a2.4 2.4 0 01-2.5-2.4"/></svg></div>
+        <h3>大模型应用</h3>
+        <div class="tags"><span class="tag">LangChain</span><span class="tag">LangGraph</span><span class="tag">DeepAgents</span><span class="tag">RAG</span><span class="tag">NL2SQL</span><span class="tag">Prompt 工程</span><span class="tag">Function Calling</span></div>
+      </div>
+      <div class="skill fade">
+        <div class="skill-ico"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6.5" rx="2"/><rect x="3" y="13.5" width="18" height="6.5" rx="2"/><path d="M7 7.2h.01M7 16.7h.01"/></svg></div>
+        <h3>后端工程</h3>
+        <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">SQLAlchemy</span><span class="tag">Celery</span><span class="tag">异步 IO</span><span class="tag">Pydantic</span><span class="tag">RESTful / WebSocket</span></div>
+      </div>
+      <div class="skill fade">
+        <div class="skill-ico"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="7.5" ry="3"/><path d="M4.5 6v12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"/><path d="M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/></svg></div>
+        <h3>数据与中间件</h3>
+        <div class="tags"><span class="tag">MySQL</span><span class="tag">PostgreSQL</span><span class="tag">Redis</span><span class="tag">MongoDB</span><span class="tag">Elasticsearch</span><span class="tag">Qdrant</span><span class="tag">Milvus</span><span class="tag">MinIO</span></div>
+      </div>
+      <div class="skill fade">
+        <div class="skill-ico"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M9.5 9v11.5"/></svg></div>
+        <h3>前端</h3>
+        <div class="tags"><span class="tag">Vue 3</span><span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Vite</span><span class="tag">TypeScript</span><span class="tag">Element Plus</span></div>
+      </div>
+      <div class="skill fade">
+        <div class="skill-ico"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></div>
+        <h3>部署运维</h3>
+        <div class="tags"><span class="tag">Docker</span><span class="tag">Docker Compose</span><span class="tag">Nginx</span><span class="tag">Linux</span><span class="tag">Git</span><span class="tag">frp 内网穿透</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="works">
+  <div class="wrap">
+    <div class="sec-head fade">
+      <span class="sec-tag">Portfolio</span>
+      <h2>项目作品</h2>
+      <div class="rule"></div>
+      <p class="sec-sub">6 个完整项目，覆盖智能体矩阵、业务系统与平台扩展三个方向</p>
+    </div>
+    <div class="tip">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg>
+      <div><b>使用说明</b>：下方 6 个项目均已完整实现并开源，源码可直接查看。
+      演示服务为按需启动（本地 Docker 环境，避免长期占用资源），需要在线演示时我会提前开启。
+      若已启动服务，请把地址填入 <code>build_portfolio.py</code> 中对应项目的 <code>demo</code> 字段并重新生成。</div>
+    </div>
+    <div class="projects">
+      <article class="proj fade" data-health="" id="p-data-agent">
+        <div class="proj-visual" style="background:linear-gradient(135deg,#6366f1,#38bdf8)">
+          <div class="proj-no">01</div>
+          <div>
+            <div class="proj-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
+            <div class="proj-group" style="margin-top:14px">智能体矩阵</div>
+          </div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-head">
+            <h3>数据问数 · NL2SQL</h3>
+            <span class="status" data-status><i></i><span data-status-text>检测中</span></span>
+          </div>
+          <p class="proj-sub">用自然语言直接查业务数据</p>
+          <p class="proj-sum">面向陶瓷品牌经销商体系的 NL2SQL 系统。把「这批砖出了多少平方、哪个系列卖得好」这类业务问题，变成一句自然语言就能问出来的数据。</p>
+          <ul class="hl"><li>RAG 流程：语义解析 → 关键词扩展 → 元数据检索 → 生成 SQL</li><li>Qdrant 向量检索字段与指标元数据，为 SQL 生成提供高相关上下文</li><li>Elasticsearch 倒排索引匹配维度真实取值，支撑 WHERE / GROUP BY</li><li>TEI + BGE 中文 Embedding 服务，全异步数据库访问</li></ul>
+          <div class="tags" style="margin-bottom:16px"><span class="tag">FastAPI</span><span class="tag">LangGraph</span><span class="tag">Qdrant</span><span class="tag">Elasticsearch</span><span class="tag">MySQL</span><span class="tag">TEI/BGE</span><span class="tag">Vue 3</span></div>
+          <div class="proj-foot">
+            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png/zhengshi-data-agent" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码
+            </a>
+            <span class="btn btn-sm btn-dis" title="演示环境按需启动，需要时联系我开启"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3.5 1.6 5.5 5 5.5 8.8L16 17H8l-1.5-5.7C6.5 7.5 8.5 4.1 12 2.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4.5M16 17l2 4.5"/></svg> 演示环境按需启动</span>
+            <span class="spacer"></span>
+            <span style="font-size:12px;color:#94a3b8;font-weight:600">本地端口 8200 / 8201</span>
+          </div>
+        </div>
+      </article>
+      <article class="proj fade" data-health="" id="p-knowledge-base">
+        <div class="proj-visual" style="background:linear-gradient(135deg,#0ea5e9,#14b8a6)">
+          <div class="proj-no">02</div>
+          <div>
+            <div class="proj-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h11a3 3 0 013 3v13H7a3 3 0 01-3-3V4z"/><path d="M4 17a3 3 0 013-3h11"/></svg></div>
+            <div class="proj-group" style="margin-top:14px">智能体矩阵</div>
+          </div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-head">
+            <h3>企业智能知识库</h3>
+            <span class="status" data-status><i></i><span data-status-text>检测中</span></span>
+          </div>
+          <p class="proj-sub">文档入库到问答检索的全链路 RAG</p>
+          <p class="proj-sum">企业级知识库系统：多格式文档解析入库、向量化存储、语义检索问答。导入与查询双服务分离，支持任务状态跟踪与 MinIO 对象存储。</p>
+          <ul class="hl"><li>导入服务(:8100) / 查询服务(:8101) 双服务解耦，独立伸缩</li><li>Milvus 向量库 + MinIO 对象存储 + MongoDB 会话历史</li><li>LangGraph 编排文档处理工作流，支持任务状态实时跟踪</li><li>BGE 中文向量模型，可配置相似度阈值过滤低质召回</li></ul>
+          <div class="tags" style="margin-bottom:16px"><span class="tag">FastAPI</span><span class="tag">LangGraph</span><span class="tag">Milvus</span><span class="tag">MongoDB</span><span class="tag">MinIO</span><span class="tag">BGE</span><span class="tag">PyTorch</span></div>
+          <div class="proj-foot">
+            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png/zhengshi-knowledge-base" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码
+            </a>
+            <span class="btn btn-sm btn-dis" title="演示环境按需启动，需要时联系我开启"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3.5 1.6 5.5 5 5.5 8.8L16 17H8l-1.5-5.7C6.5 7.5 8.5 4.1 12 2.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4.5M16 17l2 4.5"/></svg> 演示环境按需启动</span>
+            <span class="spacer"></span>
+            <span style="font-size:12px;color:#94a3b8;font-weight:600">本地端口 8100 / 8101</span>
+          </div>
+        </div>
+      </article>
+      <article class="proj fade" data-health="" id="p-agent-matrix">
+        <div class="proj-visual" style="background:linear-gradient(135deg,#8b5cf6,#6366f1)">
+          <div class="proj-no">03</div>
+          <div>
+            <div class="proj-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M12 7.2v4M12 11.2L6.4 16M12 11.2L17.6 16"/></svg></div>
+            <div class="proj-group" style="margin-top:14px">智能体矩阵</div>
+          </div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-head">
+            <h3>多智能体深度搜索</h3>
+            <span class="status" data-status><i></i><span data-status-text>检测中</span></span>
+          </div>
+          <p class="proj-sub">会自己拆解任务、检索、写报告的 Agent</p>
+          <p class="proj-sum">基于 DeepAgents 的多智能体协作系统。面对复杂研究型任务，自主规划子任务、并行检索多源信息、整合成结构化报告，全过程可视。</p>
+          <ul class="hl"><li>主智能体自主规划 + 子智能体并行执行的任务分解机制</li><li>WebSocket 实时推送执行过程，前端可视化监控</li><li>集成 RAGFlow 知识检索与 Tavily 联网搜索双通道</li><li>产物自动落盘，支持在线预览与下载</li></ul>
+          <div class="tags" style="margin-bottom:16px"><span class="tag">DeepAgents</span><span class="tag">LangGraph</span><span class="tag">FastAPI</span><span class="tag">WebSocket</span><span class="tag">RAGFlow</span><span class="tag">Tavily</span><span class="tag">Vue 3</span></div>
+          <div class="proj-foot">
+            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png/zhengshi-agent-matrix" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码
+            </a>
+            <span class="btn btn-sm btn-dis" title="演示环境按需启动，需要时联系我开启"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3.5 1.6 5.5 5 5.5 8.8L16 17H8l-1.5-5.7C6.5 7.5 8.5 4.1 12 2.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4.5M16 17l2 4.5"/></svg> 演示环境按需启动</span>
+            <span class="spacer"></span>
+            <span style="font-size:12px;color:#94a3b8;font-weight:600">本地端口 8010 / 8011</span>
+          </div>
+        </div>
+      </article>
+      <article class="proj fade" data-health="" id="p-customer-service">
+        <div class="proj-visual" style="background:linear-gradient(135deg,#f43f5e,#fb923c)">
+          <div class="proj-no">04</div>
+          <div>
+            <div class="proj-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13a8 8 0 1116 0v4a3 3 0 01-3 3h-2"/><rect x="2.5" y="12.5" width="4" height="6" rx="1.6"/><rect x="17.5" y="12.5" width="4" height="6" rx="1.6"/></svg></div>
+            <div class="proj-group" style="margin-top:14px">业务系统</div>
+          </div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-head">
+            <h3>智能客服系统</h3>
+            <span class="status" data-status><i></i><span data-status-text>检测中</span></span>
+          </div>
+          <p class="proj-sub">意图识别到工单流转的完整闭环</p>
+          <p class="proj-sum">分层架构的智能客服后端：自然语言理解、意图澄清、知识检索、业务调用与人工转接，按领域拆分清晰，便于扩展新的业务技能。</p>
+          <ul class="hl"><li>领域驱动分层：api / domain / engine / service / repository 职责清晰</li><li>多轮对话意图澄清机制，避免答非所问</li><li>知识检索与业务接口调用解耦，可插拔扩展技能</li><li>支持数字人对接与会话流程配置化</li></ul>
+          <div class="tags" style="margin-bottom:16px"><span class="tag">FastAPI</span><span class="tag">LangChain</span><span class="tag">SQLAlchemy</span><span class="tag">MySQL</span><span class="tag">Pydantic</span><span class="tag">Jinja2</span></div>
+          <div class="proj-foot">
+            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png/zhengshi-customer-service" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码
+            </a>
+            <span class="btn btn-sm btn-dis" title="演示环境按需启动，需要时联系我开启"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3.5 1.6 5.5 5 5.5 8.8L16 17H8l-1.5-5.7C6.5 7.5 8.5 4.1 12 2.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4.5M16 17l2 4.5"/></svg> 演示环境按需启动</span>
+            <span class="spacer"></span>
+            <span style="font-size:12px;color:#94a3b8;font-weight:600">本地端口 18082</span>
+          </div>
+        </div>
+      </article>
+      <article class="proj fade" data-health="" id="p-operation-assistant">
+        <div class="proj-visual" style="background:linear-gradient(135deg,#f59e0b,#f43f5e)">
+          <div class="proj-no">05</div>
+          <div>
+            <div class="proj-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2.5 3.5h2.6l2.4 11.2h11.4l2.1-8.4H6.2"/></svg></div>
+            <div class="proj-group" style="margin-top:14px">业务系统</div>
+          </div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-head">
+            <h3>AI 电商运营助手</h3>
+            <span class="status" data-status><i></i><span data-status-text>检测中</span></span>
+          </div>
+          <p class="proj-sub">从商品文案到营销素材的自动化生成</p>
+          <p class="proj-sum">面向电商运营的 AI 内容生产平台：商品文案、主图、短视频素材批量生成，任务队列异步执行，生成进度可追踪。</p>
+          <ul class="hl"><li>Celery 多队列异步任务（generation / agent / maintenance）</li><li>LangGraph 检查点持久化到 PostgreSQL，长任务可恢复</li><li>图片与视频双通道生成 Provider 抽象，可切换模型服务</li><li>Alembic 数据库版本管理，Next.js 前端全栈交付</li></ul>
+          <div class="tags" style="margin-bottom:16px"><span class="tag">FastAPI</span><span class="tag">Celery</span><span class="tag">LangGraph</span><span class="tag">MySQL</span><span class="tag">Redis</span><span class="tag">PostgreSQL</span><span class="tag">Next.js</span></div>
+          <div class="proj-foot">
+            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png/zhengshi-operation-assistant" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码
+            </a>
+            <span class="btn btn-sm btn-dis" title="演示环境按需启动，需要时联系我开启"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3.5 1.6 5.5 5 5.5 8.8L16 17H8l-1.5-5.7C6.5 7.5 8.5 4.1 12 2.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4.5M16 17l2 4.5"/></svg> 演示环境按需启动</span>
+            <span class="spacer"></span>
+            <span style="font-size:12px;color:#94a3b8;font-weight:600">本地端口 8000 / 3000</span>
+          </div>
+        </div>
+      </article>
+      <article class="proj fade" data-health="" id="p-octop-plugin">
+        <div class="proj-visual" style="background:linear-gradient(135deg,#10b981,#0ea5e9)">
+          <div class="proj-no">06</div>
+          <div>
+            <div class="proj-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3v6M15 3v6"/><path d="M6 9h12v3a6 6 0 01-6 6 6 6 0 01-6-6V9z"/><path d="M12 18v3"/></svg></div>
+            <div class="proj-group" style="margin-top:14px">平台扩展</div>
+          </div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-head">
+            <h3>Octop 数据仓库插件</h3>
+            <span class="status" data-status><i></i><span data-status-text>检测中</span></span>
+          </div>
+          <p class="proj-sub">让智能体平台接上企业数仓</p>
+          <p class="proj-sum">基于腾讯 Octop 智能体平台的二次开发：编写数据仓库插件，把企业自有数仓的表结构与查询能力注册为平台工具，供智能体调用。</p>
+          <ul class="hl"><li>按 Octop 插件规范实现 plugin.yaml 与工具注册</li><li>数仓 schema 语义化描述，降低大模型理解成本</li><li>SQLite 元数据 + 远程端点双模式工具实现</li><li>容器化部署，与平台镜像协同运行</li></ul>
+          <div class="tags" style="margin-bottom:16px"><span class="tag">Octop</span><span class="tag">Python</span><span class="tag">Docker</span><span class="tag">SQLite</span><span class="tag">Plugin SDK</span></div>
+          <div class="proj-foot">
+            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码
+            </a>
+            <span class="btn btn-sm btn-dis" title="演示环境按需启动，需要时联系我开启"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3.5 1.6 5.5 5 5.5 8.8L16 17H8l-1.5-5.7C6.5 7.5 8.5 4.1 12 2.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4.5M16 17l2 4.5"/></svg> 演示环境按需启动</span>
+            <span class="spacer"></span>
+            <span style="font-size:12px;color:#94a3b8;font-weight:600">本地端口 8088</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="background:linear-gradient(180deg,#eff6ff,#f8fafc)">
+  <div class="wrap">
+    <div class="sec-head fade">
+      <span class="sec-tag">Get In Touch</span>
+      <h2>联系方式</h2>
+      <div class="rule"></div>
+      <p class="sec-sub">欢迎交流项目细节、技术方案，或安排面试与演示</p>
+    </div>
+    <div class="contact-grid">
+      <div class="fade" style="display:grid;gap:14px">
+        <a class="c-item" href="mailto:ljl3133892273@gmail.com">
+          <span class="c-ico"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3 7l9 6 9-6"/></svg></span>
+          <span><b>电子邮件</b><small>ljl3133892273@gmail.com</small></span>
+        </a>
+        <a class="c-item" href="https://github.com/ljl3133892273-png" target="_blank" rel="noopener">
+          <span class="c-ico"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg></span>
+          <span><b>GitHub</b><small>github.com/ljl3133892273-png</small></span>
+        </a>
+        <div class="c-item">
+          <span class="c-ico"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
+          <span><b>所在地</b><small>河南</small></span>
+        </div>
+      </div>
+      <div class="banner fade">
+        <h3>想看看实际运行效果？</h3>
+        <p>项目均为本地 Docker 部署，为节省资源默认不常驻。需要在线演示时请提前联系我，
+        我会启动服务并提供访问地址。</p>
+        <a class="btn" href="mailto:ljl3133892273@gmail.com?subject=项目演示请求">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3 7l9 6 9-6"/></svg> 预约在线演示
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>© 2026 刘家良 · AI 应用开发 / FDE · 项目作品集</div>
+    <div style="display:flex;gap:22px">
+      <a href="#top">回到顶部 ↑</a>
+      <a href="https://github.com/ljl3133892273-png" target="_blank" rel="noopener">GitHub</a>
+      <a href="#contact">联系我</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // 移动端菜单
+  var mb = document.getElementById('menuBtn'), mm = document.getElementById('mMenu');
+  mb.addEventListener('click', function () { mm.classList.toggle('open'); });
+  Array.prototype.forEach.call(mm.querySelectorAll('a'), function (a) {
+    a.addEventListener('click', function () { mm.classList.remove('open'); });
+  });
+
+  // 滚动淡入
+  var fades = document.querySelectorAll('.fade');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    Array.prototype.forEach.call(fades, function (el) { io.observe(el); });
+  } else {
+    Array.prototype.forEach.call(fades, function (el) { el.classList.add('in'); });
+  }
+
+  // 在线状态检测：带超时，失败降级为「按需启动」而不是报错
+  function setStatus(card, state, text) {
+    var b = card.querySelector('[data-status]');
+    var t = card.querySelector('[data-status-text]');
+    if (!b || !t) return;
+    b.className = 'status' + (state ? ' ' + state : '');
+    t.textContent = text;
+  }
+
+  function probe(card) {
+    var url = card.getAttribute('data-health');
+    if (!url) { setStatus(card, '', '按需启动'); return; }
+    var done = false;
+    var timer = setTimeout(function () {
+      if (done) return; done = true; setStatus(card, 'off', '未启动');
+    }, 3500);
+    // no-cors：只要能连上就算在线，避免跨域导致误判
+    fetch(url, { mode: 'no-cors', cache: 'no-store' })
+      .then(function () {
+        if (done) return; done = true; clearTimeout(timer);
+        setStatus(card, 'on', '在线');
+      })
+      .catch(function () {
+        if (done) return; done = true; clearTimeout(timer);
+        setStatus(card, 'off', '未启动');
+      });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.proj'), probe);
+})();
+</script>
+</body>
+</html>
