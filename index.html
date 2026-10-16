@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>刘家良 · AI 应用开发 / FDE · 项目作品集</title>
-<meta name="description" content="刘家良的 AI 应用开发项目作品集：NL2SQL 问数、RAG 知识库、多智能体、智能客服、电商运营助手。">
+<meta name="description" content="刘家良的 AI 应用开发项目作品集：NL2SQL 问数、RAG 知识库、智能客服、电商运营助手、Octop 数仓插件。">
 <style>
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -235,7 +235,7 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
     <div>
       <div class="eyebrow"><span class="dot"></span>目前可到岗 · 求职中</div>
       <h1>我是 <span class="grad">刘家良</span><br>把大模型能力落到能跑通的业务系统里</h1>
-      <p class="lead">专注大模型应用工程：NL2SQL 问数、RAG 知识库、多智能体编排、智能客服与电商运营自动化。习惯从需求拆解一路做到部署上线，用 Docker 把服务交付成可访问、可演示的系统。</p>
+      <p class="lead">专注大模型应用工程：NL2SQL 问数、RAG 知识库、智能客服与电商运营自动化。习惯从需求拆解一路做到部署上线，用 Docker 把服务交付成可访问、可演示的系统。</p>
       <div class="cta">
         <a class="btn btn-primary" href="#works"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3.5 1.6 5.5 5 5.5 8.8L16 17H8l-1.5-5.7C6.5 7.5 8.5 4.1 12 2.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4.5M16 17l2 4.5"/></svg> 查看我的项目</a>
         <a class="btn btn-ghost" href="#contact"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3 7l9 6 9-6"/></svg> 联系我</a>
@@ -327,16 +327,16 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
       <span class="sec-tag">Portfolio</span>
       <h2>项目作品</h2>
       <div class="rule"></div>
-      <p class="sec-sub">6 个完整项目，覆盖智能体矩阵、业务系统与平台扩展三个方向</p>
+      <p class="sec-sub">5 个完整项目，覆盖智能体矩阵、业务系统与平台扩展三个方向</p>
     </div>
     <div class="tip">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg>
-      <div><b>使用说明</b>：下方 6 个项目均已完整实现并开源，源码可直接查看。
-      演示服务为按需启动（本地 Docker 环境，避免长期占用资源），需要在线演示时我会提前开启。
-      若已启动服务，请把地址填入 <code>build_portfolio.py</code> 中对应项目的 <code>demo</code> 字段并重新生成。</div>
+      <div><b>使用说明</b>：下方 5 个项目均已完整实现并开源，源码可直接查看。
+      标注「访问线上系统」的项目为已部署的在线演示，可直接打开体验；
+      其余项目的演示服务为按需启动（本地 Docker 环境，避免长期占用资源），需要时我会提前开启。</div>
     </div>
     <div class="projects">
-      <article class="proj fade" data-health="" id="p-data-agent">
+      <article class="proj fade" data-health="" data-idle="按需启动" id="p-data-agent">
         <div class="proj-visual" style="background:linear-gradient(135deg,#6366f1,#38bdf8)">
           <div class="proj-no">01</div>
           <div>
@@ -354,16 +354,14 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
           <ul class="hl"><li>RAG 流程：语义解析 → 关键词扩展 → 元数据检索 → 生成 SQL</li><li>Qdrant 向量检索字段与指标元数据，为 SQL 生成提供高相关上下文</li><li>Elasticsearch 倒排索引匹配维度真实取值，支撑 WHERE / GROUP BY</li><li>TEI + BGE 中文 Embedding 服务，全异步数据库访问</li></ul>
           <div class="tags" style="margin-bottom:16px"><span class="tag">FastAPI</span><span class="tag">LangGraph</span><span class="tag">Qdrant</span><span class="tag">Elasticsearch</span><span class="tag">MySQL</span><span class="tag">TEI/BGE</span><span class="tag">Vue 3</span></div>
           <div class="proj-foot">
-            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png/zhengshi-data-agent" target="_blank" rel="noopener">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码
-            </a>
+            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png/data-agent" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码</a>
             <span class="btn btn-sm btn-dis" title="演示环境按需启动，需要时联系我开启"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3.5 1.6 5.5 5 5.5 8.8L16 17H8l-1.5-5.7C6.5 7.5 8.5 4.1 12 2.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4.5M16 17l2 4.5"/></svg> 演示环境按需启动</span>
             <span class="spacer"></span>
             <span style="font-size:12px;color:#94a3b8;font-weight:600">本地端口 8200 / 8201</span>
           </div>
         </div>
       </article>
-      <article class="proj fade" data-health="" id="p-knowledge-base">
+      <article class="proj fade" data-health="" data-idle="按需启动" id="p-knowledge-base">
         <div class="proj-visual" style="background:linear-gradient(135deg,#0ea5e9,#14b8a6)">
           <div class="proj-no">02</div>
           <div>
@@ -381,45 +379,16 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
           <ul class="hl"><li>导入服务(:8100) / 查询服务(:8101) 双服务解耦，独立伸缩</li><li>Milvus 向量库 + MinIO 对象存储 + MongoDB 会话历史</li><li>LangGraph 编排文档处理工作流，支持任务状态实时跟踪</li><li>BGE 中文向量模型，可配置相似度阈值过滤低质召回</li></ul>
           <div class="tags" style="margin-bottom:16px"><span class="tag">FastAPI</span><span class="tag">LangGraph</span><span class="tag">Milvus</span><span class="tag">MongoDB</span><span class="tag">MinIO</span><span class="tag">BGE</span><span class="tag">PyTorch</span></div>
           <div class="proj-foot">
-            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png/zhengshi-knowledge-base" target="_blank" rel="noopener">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码
-            </a>
+            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png/knowledge_base" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码</a>
             <span class="btn btn-sm btn-dis" title="演示环境按需启动，需要时联系我开启"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3.5 1.6 5.5 5 5.5 8.8L16 17H8l-1.5-5.7C6.5 7.5 8.5 4.1 12 2.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4.5M16 17l2 4.5"/></svg> 演示环境按需启动</span>
             <span class="spacer"></span>
             <span style="font-size:12px;color:#94a3b8;font-weight:600">本地端口 8100 / 8101</span>
           </div>
         </div>
       </article>
-      <article class="proj fade" data-health="" id="p-agent-matrix">
-        <div class="proj-visual" style="background:linear-gradient(135deg,#8b5cf6,#6366f1)">
-          <div class="proj-no">03</div>
-          <div>
-            <div class="proj-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M12 7.2v4M12 11.2L6.4 16M12 11.2L17.6 16"/></svg></div>
-            <div class="proj-group" style="margin-top:14px">智能体矩阵</div>
-          </div>
-        </div>
-        <div class="proj-body">
-          <div class="proj-head">
-            <h3>多智能体深度搜索</h3>
-            <span class="status" data-status><i></i><span data-status-text>检测中</span></span>
-          </div>
-          <p class="proj-sub">会自己拆解任务、检索、写报告的 Agent</p>
-          <p class="proj-sum">基于 DeepAgents 的多智能体协作系统。面对复杂研究型任务，自主规划子任务、并行检索多源信息、整合成结构化报告，全过程可视。</p>
-          <ul class="hl"><li>主智能体自主规划 + 子智能体并行执行的任务分解机制</li><li>WebSocket 实时推送执行过程，前端可视化监控</li><li>集成 RAGFlow 知识检索与 Tavily 联网搜索双通道</li><li>产物自动落盘，支持在线预览与下载</li></ul>
-          <div class="tags" style="margin-bottom:16px"><span class="tag">DeepAgents</span><span class="tag">LangGraph</span><span class="tag">FastAPI</span><span class="tag">WebSocket</span><span class="tag">RAGFlow</span><span class="tag">Tavily</span><span class="tag">Vue 3</span></div>
-          <div class="proj-foot">
-            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png/zhengshi-agent-matrix" target="_blank" rel="noopener">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码
-            </a>
-            <span class="btn btn-sm btn-dis" title="演示环境按需启动，需要时联系我开启"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3.5 1.6 5.5 5 5.5 8.8L16 17H8l-1.5-5.7C6.5 7.5 8.5 4.1 12 2.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4.5M16 17l2 4.5"/></svg> 演示环境按需启动</span>
-            <span class="spacer"></span>
-            <span style="font-size:12px;color:#94a3b8;font-weight:600">本地端口 8010 / 8011</span>
-          </div>
-        </div>
-      </article>
-      <article class="proj fade" data-health="" id="p-customer-service">
+      <article class="proj fade" data-health="" data-idle="按需启动" id="p-customer-service">
         <div class="proj-visual" style="background:linear-gradient(135deg,#f43f5e,#fb923c)">
-          <div class="proj-no">04</div>
+          <div class="proj-no">03</div>
           <div>
             <div class="proj-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13a8 8 0 1116 0v4a3 3 0 01-3 3h-2"/><rect x="2.5" y="12.5" width="4" height="6" rx="1.6"/><rect x="17.5" y="12.5" width="4" height="6" rx="1.6"/></svg></div>
             <div class="proj-group" style="margin-top:14px">业务系统</div>
@@ -435,18 +404,16 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
           <ul class="hl"><li>领域驱动分层：api / domain / engine / service / repository 职责清晰</li><li>多轮对话意图澄清机制，避免答非所问</li><li>知识检索与业务接口调用解耦，可插拔扩展技能</li><li>支持数字人对接与会话流程配置化</li></ul>
           <div class="tags" style="margin-bottom:16px"><span class="tag">FastAPI</span><span class="tag">LangChain</span><span class="tag">SQLAlchemy</span><span class="tag">MySQL</span><span class="tag">Pydantic</span><span class="tag">Jinja2</span></div>
           <div class="proj-foot">
-            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png/zhengshi-customer-service" target="_blank" rel="noopener">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码
-            </a>
+            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png/customer-service-backend" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码</a>
             <span class="btn btn-sm btn-dis" title="演示环境按需启动，需要时联系我开启"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3.5 1.6 5.5 5 5.5 8.8L16 17H8l-1.5-5.7C6.5 7.5 8.5 4.1 12 2.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4.5M16 17l2 4.5"/></svg> 演示环境按需启动</span>
             <span class="spacer"></span>
             <span style="font-size:12px;color:#94a3b8;font-weight:600">本地端口 18082</span>
           </div>
         </div>
       </article>
-      <article class="proj fade" data-health="" id="p-operation-assistant">
+      <article class="proj fade" data-health="" data-idle="按需启动" id="p-operation-assistant">
         <div class="proj-visual" style="background:linear-gradient(135deg,#f59e0b,#f43f5e)">
-          <div class="proj-no">05</div>
+          <div class="proj-no">04</div>
           <div>
             <div class="proj-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2.5 3.5h2.6l2.4 11.2h11.4l2.1-8.4H6.2"/></svg></div>
             <div class="proj-group" style="margin-top:14px">业务系统</div>
@@ -462,18 +429,16 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
           <ul class="hl"><li>Celery 多队列异步任务（generation / agent / maintenance）</li><li>LangGraph 检查点持久化到 PostgreSQL，长任务可恢复</li><li>图片与视频双通道生成 Provider 抽象，可切换模型服务</li><li>Alembic 数据库版本管理，Next.js 前端全栈交付</li></ul>
           <div class="tags" style="margin-bottom:16px"><span class="tag">FastAPI</span><span class="tag">Celery</span><span class="tag">LangGraph</span><span class="tag">MySQL</span><span class="tag">Redis</span><span class="tag">PostgreSQL</span><span class="tag">Next.js</span></div>
           <div class="proj-foot">
-            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png/zhengshi-operation-assistant" target="_blank" rel="noopener">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码
-            </a>
+            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png/ecommerce-operation-assistant" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码</a>
             <span class="btn btn-sm btn-dis" title="演示环境按需启动，需要时联系我开启"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3.5 1.6 5.5 5 5.5 8.8L16 17H8l-1.5-5.7C6.5 7.5 8.5 4.1 12 2.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4.5M16 17l2 4.5"/></svg> 演示环境按需启动</span>
             <span class="spacer"></span>
             <span style="font-size:12px;color:#94a3b8;font-weight:600">本地端口 8000 / 3000</span>
           </div>
         </div>
       </article>
-      <article class="proj fade" data-health="" id="p-octop-plugin">
+      <article class="proj fade" data-health="" data-idle="已部署" id="p-octop-plugin">
         <div class="proj-visual" style="background:linear-gradient(135deg,#10b981,#0ea5e9)">
-          <div class="proj-no">06</div>
+          <div class="proj-no">05</div>
           <div>
             <div class="proj-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3v6M15 3v6"/><path d="M6 9h12v3a6 6 0 01-6 6 6 6 0 01-6-6V9z"/><path d="M12 18v3"/></svg></div>
             <div class="proj-group" style="margin-top:14px">平台扩展</div>
@@ -489,10 +454,7 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
           <ul class="hl"><li>按 Octop 插件规范实现 plugin.yaml 与工具注册</li><li>数仓 schema 语义化描述，降低大模型理解成本</li><li>SQLite 元数据 + 远程端点双模式工具实现</li><li>容器化部署，与平台镜像协同运行</li></ul>
           <div class="tags" style="margin-bottom:16px"><span class="tag">Octop</span><span class="tag">Python</span><span class="tag">Docker</span><span class="tag">SQLite</span><span class="tag">Plugin SDK</span></div>
           <div class="proj-foot">
-            <a class="btn btn-ghost btn-sm" href="https://github.com/ljl3133892273-png" target="_blank" rel="noopener">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.6m12 5.6v-3.5a3 3 0 00-.8-2.3c2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 00-1.3-3.2 4.3 4.3 0 00-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 00-6 0C6.5 3.6 5.5 3.9 5.5 3.9a4.3 4.3 0 00-.1 3.2A4.6 4.6 0 004 10.3c0 4.7 2.8 5.7 5.5 6a3 3 0 00-.8 2.3V21"/></svg> 查看源码
-            </a>
-            <span class="btn btn-sm btn-dis" title="演示环境按需启动，需要时联系我开启"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3.5 1.6 5.5 5 5.5 8.8L16 17H8l-1.5-5.7C6.5 7.5 8.5 4.1 12 2.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4.5M16 17l2 4.5"/></svg> 演示环境按需启动</span>
+            <a class="btn btn-primary btn-sm" href="http://81.70.85.14:8088/" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3.5 1.6 5.5 5 5.5 8.8L16 17H8l-1.5-5.7C6.5 7.5 8.5 4.1 12 2.5z"/><circle cx="12" cy="10" r="1.8"/><path d="M8 17l-2 4.5M16 17l2 4.5"/></svg> 访问线上系统</a>
             <span class="spacer"></span>
             <span style="font-size:12px;color:#94a3b8;font-weight:600">本地端口 8088</span>
           </div>
@@ -581,7 +543,7 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
 
   function probe(card) {
     var url = card.getAttribute('data-health');
-    if (!url) { setStatus(card, '', '按需启动'); return; }
+    if (!url) { setStatus(card, '', card.getAttribute('data-idle') || '按需启动'); return; }
     var done = false;
     var timer = setTimeout(function () {
       if (done) return; done = true; setStatus(card, 'off', '未启动');
