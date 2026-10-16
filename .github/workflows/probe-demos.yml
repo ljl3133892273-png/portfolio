@@ -8,9 +8,15 @@ on:
 permissions:
   contents: write
 
+# 串行化：同一工作流不并行执行，后来者排队
+concurrency:
+  group: probe-demos
+  cancel-in-progress: false
+
 jobs:
   probe:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,7 +32,6 @@ jobs:
             ["octop-plugin"]="http://81.70.85.14:8088/"
           )
 
-          # 整个 JSON 一次性写入文件（重定向必须包住整个代码块）
           {
             echo "{"
             first=1
@@ -47,14 +52,38 @@ jobs:
           echo "--- 本次探测结果 ---"
           cat status.json
 
-      - name: Commit status.json
+      - name: Commit and push status.json
+        shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet status.json; then
+
+          # 有变化才提交，没变化直接退出
+          git add status.json
+          if git diff --cached --quiet; then
             echo "状态无变化，跳过提交"
             exit 0
           fi
-          git add status.json
           git commit -m "chore: 更新演示服务在线状态 [skip ci]"
-          git push
+
+          # 带重试的推送：被拒先同步远端再推；
+          # rebase 冲突只可能是 status.json（有人手动改过），一律以探测结果为准
+          for i in 1 2 3; do
+            if git push origin HEAD:main; then
+              echo "推送成功"
+              exit 0
+            fi
+            echo "推送被拒，同步远端后重试 ($i/3)"
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git checkout --theirs -- status.json
+              git add status.json
+              GIT_EDITOR=true git rebase --continue
+            fi
+            if git diff --quiet origin/main HEAD; then
+              echo "远端已是最新状态"
+              exit 0
+            fi
+          done
+          echo "重试 3 次仍失败"
+          exit 1
