@@ -331,7 +331,7 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
     </div>
 
     <div class="projects">
-      <article class="proj fade" data-health="" data-idle="按需启动" data-status-id="data-agent" id="p-data-agent">
+      <article class="proj fade" data-health="" data-idle="暂未启动" data-status-id="data-agent" id="p-data-agent">
         <div class="proj-visual" style="background:linear-gradient(135deg,#6366f1,#38bdf8)">
           <div class="proj-no">01</div>
           <div>
@@ -357,7 +357,7 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
           </div>
         </div>
       </article>
-      <article class="proj fade" data-health="" data-idle="按需启动" data-status-id="knowledge-base" id="p-knowledge-base">
+      <article class="proj fade" data-health="" data-idle="暂未启动" data-status-id="knowledge-base" id="p-knowledge-base">
         <div class="proj-visual" style="background:linear-gradient(135deg,#0ea5e9,#14b8a6)">
           <div class="proj-no">02</div>
           <div>
@@ -383,7 +383,7 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
           </div>
         </div>
       </article>
-      <article class="proj fade" data-health="" data-idle="按需启动" data-status-id="customer-service" id="p-customer-service">
+      <article class="proj fade" data-health="" data-idle="暂未启动" data-status-id="customer-service" id="p-customer-service">
         <div class="proj-visual" style="background:linear-gradient(135deg,#f43f5e,#fb923c)">
           <div class="proj-no">03</div>
           <div>
@@ -409,7 +409,7 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
           </div>
         </div>
       </article>
-      <article class="proj fade" data-health="" data-idle="按需启动" data-status-id="operation-assistant" id="p-operation-assistant">
+      <article class="proj fade" data-health="" data-idle="暂未启动" data-status-id="operation-assistant" id="p-operation-assistant">
         <div class="proj-visual" style="background:linear-gradient(135deg,#f59e0b,#f43f5e)">
           <div class="proj-no">04</div>
           <div>
@@ -559,7 +559,7 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
 
   function applyStatus(card, online) {
     setDemoBtn(card, online);
-    var idle = card.getAttribute('data-idle') || '按需启动';
+    var idle = card.getAttribute('data-idle') || '暂未启动';
     setStatus(card, online ? 'on' : 'off', online ? '在线' : idle);
   }
 
@@ -567,7 +567,7 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
   // 会被浏览器拦截，所以只对 localhost 这类地址有意义）
   function probeFallback(card) {
     var url = card.getAttribute('data-health');
-    if (!url) { setStatus(card, '', card.getAttribute('data-idle') || '按需启动'); return; }
+    if (!url) { setStatus(card, '', card.getAttribute('data-idle') || '暂未启动'); return; }
     var done = false;
     var timer = setTimeout(function () {
       if (done) return; done = true; applyStatus(card, false);
@@ -608,7 +608,7 @@ footer{background:#0f172a;color:#94a3b8;padding:34px 0;font-size:13.5px}
       if (card.getAttribute('data-health')) {
         probeFallback(card);
       } else {
-        setStatus(card, '', card.getAttribute('data-idle') || '按需启动');
+        setStatus(card, '', card.getAttribute('data-idle') || '暂未启动');
       }
     });
   });
