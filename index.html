@@ -290,7 +290,7 @@
     margin-bottom: 24px;
     border-radius: 12px;
     overflow: hidden;
-    max-height: 340px;
+    max-height: 480px;
   }
   .carousel-track {
     display: flex;
@@ -308,7 +308,7 @@
   .carousel-slide img {
     width: 100%;
     height: auto;
-    max-height: 300px;
+    max-height: 460px;
     object-fit: contain;
     display: block;
   }
@@ -536,6 +536,54 @@
   }
   .fade-in.visible { opacity: 1; transform: translateY(0); }
 
+  /* ===== 演示状态与演示按钮 ===== */
+  .project-meta-tag.live { display: inline-flex; align-items: center; gap: 6px; }
+  .live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--ink3);
+  }
+  .project-meta-tag.live.is-on {
+    background: rgba(107,140,138,0.10);
+    color: var(--accent2);
+    border-color: rgba(107,140,138,0.28);
+  }
+  .project-meta-tag.live.is-on .live-dot {
+    background: var(--accent2);
+    box-shadow: 0 0 0 3px rgba(107,140,138,0.14);
+    animation: pulse 2s infinite;
+  }
+  .project-meta-tag.live.is-off { color: var(--ink3); }
+  .project-meta-tag.live.is-off .live-dot { opacity: 0.55; }
+  .project-meta-tag.live.is-unknown .live-dot { opacity: 0.35; }
+
+  .btn-demo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid rgba(74,111,165,0.35);
+    color: var(--accent);
+    background: rgba(74,111,165,0.06);
+    transition: all 0.25s;
+  }
+  .btn-demo:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  .btn-demo .demo-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: currentColor;
+  }
+  .btn-demo.is-on .demo-dot { animation: pulse 2s infinite; }
+  .btn-demo.is-off {
+    border-color: var(--line);
+    color: var(--ink3);
+    background: transparent;
+    cursor: not-allowed;
+  }
+  .btn-demo.is-off:hover { background: transparent; color: var(--ink3); border-color: var(--line); }
+
   /* ===== 响应式 ===== */
   @media (max-width: 900px) {
     .layout { grid-template-columns: 1fr; }
@@ -663,147 +711,6 @@
           <div class="project-body">
             <div class="carousel-container" data-carousel>
               <div class="carousel-track">
-                <div class="carousel-slide"><img src="screenshots/nl2sql-1.webp" alt="数据问数截图1"></div>
-                <div class="carousel-slide"><img src="screenshots/nl2sql-2.webp" alt="数据问数截图2"></div>
-                <div class="carousel-slide"><img src="screenshots/nl2sql-3.webp" alt="数据问数截图3"></div>
-              </div>
-              <button class="carousel-btn prev" aria-label="上一张">‹</button>
-              <button class="carousel-btn next" aria-label="下一张">›</button>
-              <div class="carousel-dots">
-                <span class="carousel-dot active"></span>
-                <span class="carousel-dot"></span>
-                <span class="carousel-dot"></span>
-              </div>
-            </div>
-            <div class="project-meta">
-              <span class="project-meta-tag accent">智能应用</span>
-              <span class="project-meta-tag">RAG</span>
-              <span class="project-meta-tag">NL2SQL</span>
-            </div>
-            <h3>数据问数 · NL2SQL</h3>
-            <div class="project-subtitle">用自然语言直接查业务数据</div>
-            <p class="project-desc">面向陶瓷品牌经销商体系的 NL2SQL 系统。把「这批砖出了多少平方、哪个系列卖得好」这类业务问题，变成一句自然语言就能问出来的数据。</p>
-            <ul class="project-features">
-              <li>RAG 流程：语义解析 → 关键词扩展 → 元数据检索 → 生成 SQL</li>
-              <li>Qdrant 向量检索 + Elasticsearch 倒排索引双引擎</li>
-              <li>TEI + BGE 中文 Embedding 服务，全异步数据库访问</li>
-            </ul>
-            <div class="project-tech">
-              <span class="skill-tag">FastAPI</span>
-              <span class="skill-tag">LangGraph</span>
-              <span class="skill-tag">Qdrant</span>
-              <span class="skill-tag">Elasticsearch</span>
-              <span class="skill-tag">MySQL</span>
-              <span class="skill-tag">TEI/BGE</span>
-              <span class="skill-tag">Vue 3</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/ljl3133892273-png/data-agent" class="btn-outline">查看源码</a>
-              <a href="#" class="btn-ghost">线上系统</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 项目2 -->
-        <div class="project-block fade-in">
-          <div class="project-index">02</div>
-          <div class="project-body">
-            <div class="carousel-container" data-carousel>
-              <div class="carousel-track">
-                <div class="carousel-slide"><img src="screenshots/rag-1.webp" alt="知识库截图1"></div>
-                <div class="carousel-slide"><img src="screenshots/rag-2.webp" alt="知识库截图2"></div>
-                <div class="carousel-slide"><img src="screenshots/rag-3.webp" alt="知识库截图3"></div>
-              </div>
-              <button class="carousel-btn prev" aria-label="上一张">‹</button>
-              <button class="carousel-btn next" aria-label="下一张">›</button>
-              <div class="carousel-dots">
-                <span class="carousel-dot active"></span>
-                <span class="carousel-dot"></span>
-                <span class="carousel-dot"></span>
-              </div>
-            </div>
-            <div class="project-meta">
-              <span class="project-meta-tag accent">智能应用</span>
-              <span class="project-meta-tag">RAG</span>
-              <span class="project-meta-tag">知识库</span>
-            </div>
-            <h3>企业智能知识库</h3>
-            <div class="project-subtitle">文档入库到问答检索的全链路 RAG</div>
-            <p class="project-desc">企业级知识库系统：多格式文档解析入库、向量化存储、语义检索问答。导入与查询双服务分离，支持任务状态跟踪。</p>
-            <ul class="project-features">
-              <li>导入服务 / 查询服务双服务解耦，独立伸缩</li>
-              <li>Milvus 向量库 + MinIO 对象存储 + MongoDB 会话历史</li>
-              <li>LangGraph 编排文档处理工作流，任务状态实时跟踪</li>
-            </ul>
-            <div class="project-tech">
-              <span class="skill-tag">FastAPI</span>
-              <span class="skill-tag">LangGraph</span>
-              <span class="skill-tag">Milvus</span>
-              <span class="skill-tag">MongoDB</span>
-              <span class="skill-tag">MinIO</span>
-              <span class="skill-tag">BGE</span>
-              <span class="skill-tag">PyTorch</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/ljl3133892273-png/knowledge_base" class="btn-outline">查看源码</a>
-              <a href="#" class="btn-ghost">线上系统</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 项目3 -->
-        <div class="project-block fade-in">
-          <div class="project-index">03</div>
-          <div class="project-body">
-            <div class="carousel-container" data-carousel>
-              <div class="carousel-track">
-                <div class="carousel-slide"><img src="screenshots/cs-1.webp" alt="智能客服截图1"></div>
-                <div class="carousel-slide"><img src="screenshots/cs-2.webp" alt="智能客服截图2"></div>
-                <div class="carousel-slide"><img src="screenshots/cs-3.webp" alt="智能客服截图3"></div>
-              </div>
-              <button class="carousel-btn prev" aria-label="上一张">‹</button>
-              <button class="carousel-btn next" aria-label="下一张">›</button>
-              <div class="carousel-dots">
-                <span class="carousel-dot active"></span>
-                <span class="carousel-dot"></span>
-                <span class="carousel-dot"></span>
-              </div>
-            </div>
-            <div class="project-meta">
-              <span class="project-meta-tag accent">业务系统</span>
-              <span class="project-meta-tag">智能客服</span>
-              <span class="project-meta-tag">Agent</span>
-            </div>
-            <h3>智能客服系统</h3>
-            <div class="project-subtitle">意图识别到工单流转的完整闭环</div>
-            <p class="project-desc">分层架构的智能客服后端：自然语言理解、意图澄清、知识检索、业务调用与人工转接，按领域拆分清晰。</p>
-            <ul class="project-features">
-              <li>领域驱动分层：api / domain / engine / service / repository</li>
-              <li>多轮对话意图澄清机制，避免答非所问</li>
-              <li>知识检索与业务接口调用解耦，可插拔扩展技能</li>
-            </ul>
-            <div class="project-tech">
-              <span class="skill-tag">FastAPI</span>
-              <span class="skill-tag">LangChain</span>
-              <span class="skill-tag">SQLAlchemy</span>
-              <span class="skill-tag">MySQL</span>
-              <span class="skill-tag">Pydantic</span>
-              <span class="skill-tag">Jinja2</span>
-              <span class="skill-tag">Vue 3</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/ljl3133892273-png/customer-service-backend" class="btn-outline">查看源码</a>
-              <a href="#" class="btn-ghost">线上系统</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 项目4 -->
-        <div class="project-block fade-in">
-          <div class="project-index">04</div>
-          <div class="project-body">
-            <div class="carousel-container" data-carousel>
-              <div class="carousel-track">
                 <div class="carousel-slide"><img src="screenshots/ops-1.webp" alt="运营助手截图1"></div>
                 <div class="carousel-slide"><img src="screenshots/ops-2.webp" alt="运营助手截图2"></div>
               </div>
@@ -818,6 +725,7 @@
               <span class="project-meta-tag accent">业务系统</span>
               <span class="project-meta-tag">AIGC</span>
               <span class="project-meta-tag">电商</span>
+              <span class="project-meta-tag live" data-status><i class="live-dot"></i><span data-status-text>检测中</span></span>
             </div>
             <h3>AI 电商运营助手</h3>
             <div class="project-subtitle">从商品文案到营销素材的自动化生成</div>
@@ -837,8 +745,152 @@
               <span class="skill-tag">Next.js</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/ljl3133892273-png/ecommerce-operation-assistant" class="btn-outline">查看源码</a>
-              <a href="#" class="btn-ghost">线上系统</a>
+              <a href="https://github.com/ljl3133892273-png/ecommerce-operation-assistant" class="btn-outline" target="_blank" rel="noopener">查看源码</a>
+              <a class="btn-demo" data-demo="operation-assistant" href="http://81.70.85.14:8093/" target="_blank" rel="noopener"><span class="demo-dot"></span><span data-demo-text>访问线上系统</span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 项目2 -->
+        <div class="project-block fade-in">
+          <div class="project-index">02</div>
+          <div class="project-body">
+            <div class="carousel-container" data-carousel>
+              <div class="carousel-track">
+                <div class="carousel-slide"><img src="screenshots/cs-1.webp" alt="智能客服截图1"></div>
+                <div class="carousel-slide"><img src="screenshots/cs-2.webp" alt="智能客服截图2"></div>
+                <div class="carousel-slide"><img src="screenshots/cs-3.webp" alt="智能客服截图3"></div>
+              </div>
+              <button class="carousel-btn prev" aria-label="上一张">‹</button>
+              <button class="carousel-btn next" aria-label="下一张">›</button>
+              <div class="carousel-dots">
+                <span class="carousel-dot active"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+              </div>
+            </div>
+            <div class="project-meta">
+              <span class="project-meta-tag accent">业务系统</span>
+              <span class="project-meta-tag">智能客服</span>
+              <span class="project-meta-tag">Agent</span>
+              <span class="project-meta-tag live" data-status><i class="live-dot"></i><span data-status-text>检测中</span></span>
+            </div>
+            <h3>智能客服系统</h3>
+            <div class="project-subtitle">意图识别到工单流转的完整闭环</div>
+            <p class="project-desc">分层架构的智能客服后端：自然语言理解、意图澄清、知识检索、业务调用与人工转接，按领域拆分清晰。</p>
+            <ul class="project-features">
+              <li>领域驱动分层：api / domain / engine / service / repository</li>
+              <li>多轮对话意图澄清机制，避免答非所问</li>
+              <li>知识检索与业务接口调用解耦，可插拔扩展技能</li>
+            </ul>
+            <div class="project-tech">
+              <span class="skill-tag">FastAPI</span>
+              <span class="skill-tag">LangChain</span>
+              <span class="skill-tag">SQLAlchemy</span>
+              <span class="skill-tag">MySQL</span>
+              <span class="skill-tag">Pydantic</span>
+              <span class="skill-tag">Jinja2</span>
+              <span class="skill-tag">Vue 3</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/ljl3133892273-png/customer-service-backend" class="btn-outline" target="_blank" rel="noopener">查看源码</a>
+              <a class="btn-demo" data-demo="customer-service" href="http://81.70.85.14:8092/" target="_blank" rel="noopener"><span class="demo-dot"></span><span data-demo-text>访问线上系统</span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 项目3 -->
+        <div class="project-block fade-in">
+          <div class="project-index">03</div>
+          <div class="project-body">
+            <div class="carousel-container" data-carousel>
+              <div class="carousel-track">
+                <div class="carousel-slide"><img src="screenshots/rag-1.webp" alt="知识库截图1"></div>
+                <div class="carousel-slide"><img src="screenshots/rag-2.webp" alt="知识库截图2"></div>
+                <div class="carousel-slide"><img src="screenshots/rag-3.webp" alt="知识库截图3"></div>
+              </div>
+              <button class="carousel-btn prev" aria-label="上一张">‹</button>
+              <button class="carousel-btn next" aria-label="下一张">›</button>
+              <div class="carousel-dots">
+                <span class="carousel-dot active"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+              </div>
+            </div>
+            <div class="project-meta">
+              <span class="project-meta-tag accent">智能应用</span>
+              <span class="project-meta-tag">RAG</span>
+              <span class="project-meta-tag">知识库</span>
+              <span class="project-meta-tag live" data-status><i class="live-dot"></i><span data-status-text>检测中</span></span>
+            </div>
+            <h3>企业智能知识库</h3>
+            <div class="project-subtitle">文档入库到问答检索的全链路 RAG</div>
+            <p class="project-desc">企业级知识库系统：多格式文档解析入库、向量化存储、语义检索问答。导入与查询双服务分离，支持任务状态跟踪。</p>
+            <ul class="project-features">
+              <li>导入服务 / 查询服务双服务解耦，独立伸缩</li>
+              <li>Milvus 向量库 + MinIO 对象存储 + MongoDB 会话历史</li>
+              <li>LangGraph 编排文档处理工作流，任务状态实时跟踪</li>
+            </ul>
+            <div class="project-tech">
+              <span class="skill-tag">FastAPI</span>
+              <span class="skill-tag">LangGraph</span>
+              <span class="skill-tag">Milvus</span>
+              <span class="skill-tag">MongoDB</span>
+              <span class="skill-tag">MinIO</span>
+              <span class="skill-tag">BGE</span>
+              <span class="skill-tag">PyTorch</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/ljl3133892273-png/knowledge_base" class="btn-outline" target="_blank" rel="noopener">查看源码</a>
+              <a class="btn-demo" data-demo="knowledge-base" href="http://81.70.85.14:8095/" target="_blank" rel="noopener"><span class="demo-dot"></span><span data-demo-text>访问线上系统</span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 项目4 -->
+        <div class="project-block fade-in">
+          <div class="project-index">04</div>
+          <div class="project-body">
+            <div class="carousel-container" data-carousel>
+              <div class="carousel-track">
+                <div class="carousel-slide"><img src="screenshots/nl2sql-1.webp" alt="数据问数截图1"></div>
+                <div class="carousel-slide"><img src="screenshots/nl2sql-2.webp" alt="数据问数截图2"></div>
+                <div class="carousel-slide"><img src="screenshots/nl2sql-3.webp" alt="数据问数截图3"></div>
+              </div>
+              <button class="carousel-btn prev" aria-label="上一张">‹</button>
+              <button class="carousel-btn next" aria-label="下一张">›</button>
+              <div class="carousel-dots">
+                <span class="carousel-dot active"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+              </div>
+            </div>
+            <div class="project-meta">
+              <span class="project-meta-tag accent">智能应用</span>
+              <span class="project-meta-tag">RAG</span>
+              <span class="project-meta-tag">NL2SQL</span>
+              <span class="project-meta-tag live" data-status><i class="live-dot"></i><span data-status-text>检测中</span></span>
+            </div>
+            <h3>数据问数 · NL2SQL</h3>
+            <div class="project-subtitle">用自然语言直接查业务数据</div>
+            <p class="project-desc">面向陶瓷品牌经销商体系的 NL2SQL 系统。把「这批砖出了多少平方、哪个系列卖得好」这类业务问题，变成一句自然语言就能问出来的数据。</p>
+            <ul class="project-features">
+              <li>RAG 流程：语义解析 → 关键词扩展 → 元数据检索 → 生成 SQL</li>
+              <li>Qdrant 向量检索 + Elasticsearch 倒排索引双引擎</li>
+              <li>TEI + BGE 中文 Embedding 服务，全异步数据库访问</li>
+            </ul>
+            <div class="project-tech">
+              <span class="skill-tag">FastAPI</span>
+              <span class="skill-tag">LangGraph</span>
+              <span class="skill-tag">Qdrant</span>
+              <span class="skill-tag">Elasticsearch</span>
+              <span class="skill-tag">MySQL</span>
+              <span class="skill-tag">TEI/BGE</span>
+              <span class="skill-tag">Vue 3</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/ljl3133892273-png/data-agent" class="btn-outline" target="_blank" rel="noopener">查看源码</a>
+              <a class="btn-demo" data-demo="data-agent" href="http://81.70.85.14:8094/" target="_blank" rel="noopener"><span class="demo-dot"></span><span data-demo-text>访问线上系统</span></a>
             </div>
           </div>
         </div>
@@ -865,6 +917,7 @@
               <span class="project-meta-tag accent">平台扩展</span>
               <span class="project-meta-tag">插件开发</span>
               <span class="project-meta-tag">数仓</span>
+              <span class="project-meta-tag live" data-status><i class="live-dot"></i><span data-status-text>检测中</span></span>
             </div>
             <h3>Octop 数据仓库插件</h3>
             <div class="project-subtitle">让智能体平台接上企业数仓</div>
@@ -882,7 +935,7 @@
               <span class="skill-tag">Plugin SDK</span>
             </div>
             <div class="project-links">
-              <a href="#" class="btn-ghost">线上系统</a>
+              <a class="btn-demo" data-demo="octop-plugin" href="http://81.70.85.14:8088/" target="_blank" rel="noopener"><span class="demo-dot"></span><span data-demo-text>访问线上系统</span></a>
             </div>
           </div>
         </div>
@@ -1048,6 +1101,84 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ===== 演示服务在线状态 =====
+// 状态源：优先同源 status.json（Pages / 自有服务器都可放一份，无跨域），
+// 失败再取 raw.githubusercontent.com；都失败则保持默认（按钮可点，不误伤在线服务）。
+(function () {
+  var STATUS_URLS = [
+    'status.json',
+    'https://raw.githubusercontent.com/ljl3133892273-png/portfolio/main/status.json'
+  ];
+
+  var items = Array.prototype.slice.call(document.querySelectorAll('[data-demo]'));
+
+  function setTag(el, state, text) {
+    var card = el.closest('.project-body');
+    if (!card) return;
+    var tag = card.querySelector('[data-status]');
+    var txt = card.querySelector('[data-status-text]');
+    if (!tag || !txt) return;
+    tag.classList.remove('is-on', 'is-off', 'is-unknown');
+    if (state) tag.classList.add(state);
+    txt.textContent = text;
+  }
+
+  function apply(el, online) {
+    el.classList.remove('is-on', 'is-off');
+    el.classList.add(online ? 'is-on' : 'is-off');
+    var label = el.querySelector('[data-demo-text]');
+    if (online) {
+      if (label) label.textContent = '访问线上系统';
+      el.setAttribute('href', el.getAttribute('data-demo-href') || el.getAttribute('href'));
+      el.removeAttribute('aria-disabled');
+      el.removeAttribute('title');
+      setTag(el, 'is-on', '在线');
+    } else {
+      if (label) label.textContent = '演示环境暂未启动';
+      if (el.getAttribute('href')) el.setAttribute('data-demo-href', el.getAttribute('href'));
+      el.removeAttribute('href');
+      el.setAttribute('aria-disabled', 'true');
+      el.setAttribute('title', '服务暂未启动，需要演示时联系我开启');
+      setTag(el, 'is-off', '按需启动');
+    }
+  }
+
+  function fetchStatus(i) {
+    if (i >= STATUS_URLS.length) return Promise.reject(new Error('no status source'));
+    return fetch(STATUS_URLS[i], { cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+      .catch(function () { return fetchStatus(i + 1); });
+  }
+
+  // 直连探测仅对同源 / localhost 有意义（跨域 http 在 https 页面会被拦截）
+  function probeLocal(el) {
+    var url = el.getAttribute('data-probe');
+    if (!url) { setTag(el, 'is-unknown', '按需启动'); return; }
+    var done = false;
+    var timer = setTimeout(function () { if (!done) { done = true; apply(el, false); } }, 3500);
+    fetch(url, { mode: 'no-cors', cache: 'no-store' }).then(function () {
+      if (done) return; done = true; clearTimeout(timer); apply(el, true);
+    }).catch(function () {
+      if (done) return; done = true; clearTimeout(timer); apply(el, false);
+    });
+  }
+
+  fetchStatus(0).then(function (map) {
+    items.forEach(function (el) {
+      var id = el.getAttribute('data-demo');
+      if (id && typeof map[id] === 'boolean') apply(el, map[id]);
+      else probeLocal(el);
+    });
+  }).catch(function () {
+    // 状态源都拿不到：本地访问直接探测，线上保持默认可点
+    items.forEach(function (el) {
+      var isLocal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) || location.protocol === 'file:';
+      if (isLocal) probeLocal(el);
+      else setTag(el, 'is-unknown', '按需启动');
+    });
+  });
+})();
 </script>
 
 </body>
