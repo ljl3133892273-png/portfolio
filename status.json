@@ -1,5 +1,5 @@
 {
-  "customer-service": false,
+  "customer-service": true,
   "data-agent": false,
   "operation-assistant": false,
   "octop-plugin": true,
