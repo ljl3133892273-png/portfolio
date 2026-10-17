@@ -3,6 +3,6 @@
   "data-agent": false,
   "operation-assistant": true,
   "octop-plugin": true,
-  "knowledge-base": true,
-  "updated_at": 1792237150
+  "knowledge-base": false,
+  "updated_at": 1792247078
 }
