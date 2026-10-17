@@ -1144,6 +1144,19 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     }
   }
 
+  // 状态数据的新鲜度上限（秒）。超过就认为数据过期，按钮一律保持可点，
+  // 只把胶囊标成「状态未知」——宁可放过，也不能因为探测停了把在线服务显示成灰的。
+  var FRESH = 5400;
+
+  // 中性态：不改动 href，按钮照常可点
+  function neutral(el) {
+    el.classList.remove('is-on', 'is-off');
+    var label = el.querySelector('[data-demo-text]');
+    if (label) label.textContent = '访问线上系统';
+    el.removeAttribute('aria-disabled');
+    setTag(el, 'is-unknown', '状态未知');
+  }
+
   function fetchStatus(i) {
     if (i >= STATUS_URLS.length) return Promise.reject(new Error('no status source'));
     return fetch(STATUS_URLS[i], { cache: 'no-store' })
@@ -1154,7 +1167,7 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
   // 直连探测仅对同源 / localhost 有意义（跨域 http 在 https 页面会被拦截）
   function probeLocal(el) {
     var url = el.getAttribute('data-probe');
-    if (!url) { setTag(el, 'is-unknown', '按需启动'); return; }
+    if (!url) { neutral(el); return; }
     var done = false;
     var timer = setTimeout(function () { if (!done) { done = true; apply(el, false); } }, 3500);
     fetch(url, { mode: 'no-cors', cache: 'no-store' }).then(function () {
@@ -1165,17 +1178,21 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
   }
 
   fetchStatus(0).then(function (map) {
+    // 只在数据新鲜时才按状态置灰；数据过期 = 探测可能停了，全部保持可点
+    var ts = Number(map && map.updated_at) || 0;
+    var fresh = ts > 0 && (Date.now() / 1000 - ts) < FRESH;
     items.forEach(function (el) {
       var id = el.getAttribute('data-demo');
+      if (!fresh) { neutral(el); return; }
       if (id && typeof map[id] === 'boolean') apply(el, map[id]);
-      else probeLocal(el);
+      else neutral(el);
     });
   }).catch(function () {
     // 状态源都拿不到：本地访问直接探测，线上保持默认可点
     items.forEach(function (el) {
       var isLocal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) || location.protocol === 'file:';
       if (isLocal) probeLocal(el);
-      else setTag(el, 'is-unknown', '按需启动');
+      else neutral(el);
     });
   });
 })();

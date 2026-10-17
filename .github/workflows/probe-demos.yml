@@ -2,8 +2,14 @@ name: probe-demos
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    # 10 分钟一次。GitHub 免费 runner 对高频定时任务限流很狠（实测 */5 会被拖到 2 小时一次），
+    # 这里放宽间隔，配合页面端「数据过期就不置灰」的兜底逻辑使用。
+    - cron: "*/10 * * * *"
   workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths-ignore:
+      - "status.json"
 
 permissions:
   contents: write
@@ -16,7 +22,7 @@ concurrency:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,11 +30,12 @@ jobs:
       - name: Probe demo services
         shell: bash
         run: |
+          # 顺序与作品集页面上的项目顺序一致
           declare -A TARGETS=(
-            ["data-agent"]="http://81.70.85.14:8094/"
-            ["knowledge-base"]="http://81.70.85.14:8095/"
-            ["customer-service"]="http://81.70.85.14:8092/"
             ["operation-assistant"]="http://81.70.85.14:8093/"
+            ["customer-service"]="http://81.70.85.14:8092/"
+            ["knowledge-base"]="http://81.70.85.14:8095/"
+            ["data-agent"]="http://81.70.85.14:8094/"
             ["octop-plugin"]="http://81.70.85.14:8088/"
           )
 
@@ -42,10 +49,10 @@ jobs:
               else
                 status="false"
               fi
-              [ $first -eq 1 ] && first=0 || echo ","
+              [ $first -eq 1 ] && first=0 || printf ',\n'
               printf '  "%s": %s' "$id" "$status"
             done
-            echo
+            printf ',\n  "updated_at": %s\n' "$(date +%s)"
             echo "}"
           } > status.json
 
@@ -58,10 +65,29 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # 有变化才提交，没变化直接退出
           git add status.json
-          if git diff --cached --quiet; then
-            echo "状态无变化，跳过提交"
+
+          # 提交条件（否则只更新工作区，不产生提交）：
+          #   1. 任一布尔状态发生变化；
+          #   2. 或距上次提交已超过 30 分钟（心跳，保证 updated_at 不至于太旧）。
+          # 这样既保持数据新鲜，又不会每 10 分钟刷一条 commit。
+          SHOULD=$(python3 - <<'PY'
+          import json, subprocess
+          new = json.load(open('status.json'))
+          try:
+              old = json.loads(subprocess.run(['git', 'show', 'HEAD:status.json'],
+                                              capture_output=True, text=True, check=True).stdout)
+          except Exception:
+              old = {}
+          keys = [k for k in new if k != 'updated_at']
+          changed = any(new.get(k) != old.get(k) for k in keys)
+          gap = int(new.get('updated_at', 0)) - int(old.get('updated_at', 0) or 0)
+          print('yes' if changed or gap >= 1800 else 'no')
+          PY
+          )
+
+          if [ "$SHOULD" != "yes" ]; then
+            echo "状态无变化且未到心跳间隔，跳过提交"
             exit 0
           fi
           git commit -m "chore: 更新演示服务在线状态 [skip ci]"

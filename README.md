@@ -26,15 +26,21 @@ AI 应用开发 / FDE 方向个人作品集站点。
 - 服务在线 → 胶囊显示「在线」（绿点脉动），按钮为可点的「访问线上系统」。
 - 服务离线 → 胶囊显示「按需启动」，按钮变灰不可点（`aria-disabled`），鼠标悬停提示需要联系我开启。
 
-状态来自同目录的 `status.json`（键：`operation-assistant` / `customer-service` / `knowledge-base` / `data-agent` / `octop-plugin`），
-读取顺序：同源 `status.json` → `raw.githubusercontent.com` 兜底 → 都失败时按钮保持默认（可点，不误伤在线服务）。
+状态来自同目录的 `status.json`（键：`operation-assistant` / `customer-service` / `knowledge-base` / `data-agent` / `octop-plugin`，
+外加 `updated_at` 时间戳），读取顺序：同源 `status.json` → `raw.githubusercontent.com` 兜底 → 都失败时按钮保持默认（可点）。
 
-`status.json` 由两端分别生成，都是每 5 分钟一次：
+**数据过期就自动放开**：页面用 `updated_at` 判断新鲜度，超过 90 分钟（`FRESH = 5400` 秒）就认为探测停了，
+按钮一律保持可点、胶囊改为「状态未知」。避免「探测任务被限流 → 在线服务被显示成灰按钮」这种最坏情况。
 
-| 环境 | 生成方式 | 探测目标 |
-| --- | --- | --- |
-| GitHub Pages | `.github/workflows/probe-demos.yml`（Actions 定时任务，自动提交） | `http://81.70.85.14:8092` / `8093` / `8094` / `8095` / `8088` |
-| 自有服务器 | 根用户 crontab 调用 `/opt/portfolio-probe.sh` | `http://127.0.0.1:8092` / `8093` / `8094` / `8095` / `8088` |
+`status.json` 由两端分别生成：
+
+| 环境 | 生成方式 | 探测目标 | 刷新节奏 |
+| --- | --- | --- | --- |
+| GitHub Pages | `.github/workflows/probe-demos.yml` | `http://81.70.85.14:8092` / `8093` / `8094` / `8095` / `8088` | 每 10 分钟探测；状态变化或满 30 分钟心跳才提交 |
+| 自有服务器 | 根用户 crontab 调用 `/opt/portfolio-probe.sh` | `http://127.0.0.1:8092` / `8093` / `8094` / `8095` / `8088` | 每 5 分钟，数据最新最准 |
+
+> **注意**：GitHub 的 `schedule` 触发不可靠，免费 runner 上 `*/5` 实测会被拖到 2 小时一次。
+> 所以别把 Pages 上的状态当成实时信号——要准就看 8090；改了代码推上来时 `push` 事件也会立刻触发一次探测。
 
 端口含义：8093 运营助手（服务器常驻）、8092 智能客服隧道、8095 RAG 知识库隧道、8094 问数隧道、8088 Octop。
 8092 / 8094 / 8095 是 SSH 反向隧道，**本机或隧道进程不在时自动判为「按需启动」**，属预期行为。
