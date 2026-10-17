@@ -435,37 +435,6 @@
   }
   .btn-ghost:hover { border-color: var(--ink3); color: var(--ink); }
 
-  /* ===== 阅读与思考 ===== */
-  .reading-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-  }
-  .reading-card {
-    padding: 28px;
-    background: var(--surface);
-    border-radius: 16px;
-    box-shadow: var(--card-shadow);
-    transition: box-shadow 0.3s, transform 0.3s;
-    border-left: 3px solid var(--accent);
-  }
-  .reading-card:hover { box-shadow: var(--card-hover); transform: translateY(-2px); }
-  .reading-source {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  .reading-card h4 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    line-height: 1.4;
-  }
-  .reading-card p { font-size: 13px; color: var(--ink2); line-height: 1.6; }
-
   /* ===== 技术栈 ===== */
   .skills-editorial {
     display: grid;
@@ -597,7 +566,7 @@
     .hero, .section, .contact-section { padding: 48px 24px; }
     .project-block { grid-template-columns: 1fr; }
     .project-index { position: relative; font-size: 48px; }
-    .about-content, .skills-editorial, .reading-grid { grid-template-columns: 1fr; }
+    .about-content, .skills-editorial { grid-template-columns: 1fr; }
     .project-body { padding: 24px; }
   }
 </style>
@@ -614,9 +583,8 @@
         <a href="#top" class="active"><span class="nav-num">01</span> 首页</a>
         <a href="#about"><span class="nav-num">02</span> 关于</a>
         <a href="#works"><span class="nav-num">03</span> 项目</a>
-        <a href="#reading"><span class="nav-num">04</span> 阅读</a>
-        <a href="#skills"><span class="nav-num">05</span> 技术栈</a>
-        <a href="#contact"><span class="nav-num">06</span> 联系</a>
+        <a href="#skills"><span class="nav-num">04</span> 技术栈</a>
+        <a href="#contact"><span class="nav-num">05</span> 联系</a>
       </nav>
     </div>
     <div class="sidebar-footer">
@@ -943,45 +911,10 @@
       </div>
     </section>
 
-    <!-- 阅读与思考 -->
-    <section class="section" id="reading">
-      <div class="section-header fade-in">
-        <span class="section-num">04</span>
-        <h2 class="section-title">阅读与思考</h2>
-      </div>
-      <div class="reading-grid">
-        <div class="reading-card fade-in">
-          <div class="reading-source">Paper · 2023</div>
-          <h4>Retrieval-Augmented Generation for Large Language Models</h4>
-          <p>RAG 领域奠基性论文，系统梳理了检索增强生成的架构分类与关键挑战。</p>
-        </div>
-        <div class="reading-card fade-in">
-          <div class="reading-source">Paper · 2024</div>
-          <h4>LangGraph: Building Stateful Multi-Actor Applications</h4>
-          <p>LangChain 团队提出的图状态机框架，解决多步 Agent 编排与 checkpoint 持久化。</p>
-        </div>
-        <div class="reading-card fade-in">
-          <div class="reading-source">Open Source</div>
-          <h4>VectorDB Benchmark: Qdrant vs Milvus vs Weaviate</h4>
-          <p>主流向量数据库横向对比，涵盖召回率、延迟、扩展性等核心指标。</p>
-        </div>
-        <div class="reading-card fade-in">
-          <div class="reading-source">Blog · 2024</div>
-          <h4>NL2SQL: From Schema Linking to Self-Correction</h4>
-          <p>NL2SQL 工程实践总结，覆盖 schema linking、SQL 校验与自纠错机制。</p>
-        </div>
-        <div class="reading-card fade-in">
-          <div class="reading-source">Paper · 2024</div>
-          <h4>Toolformer: Language Models Can Teach Themselves to Use Tools</h4>
-          <p>Function Calling 与工具使用的经典研究，对 AI Agent 工程有深远影响。</p>
-        </div>
-      </div>
-    </section>
-
     <!-- 技术栈 -->
     <section class="section" id="skills">
       <div class="section-header fade-in">
-        <span class="section-num">05</span>
+        <span class="section-num">04</span>
         <h2 class="section-title">技术栈</h2>
       </div>
       <div class="skills-editorial">
