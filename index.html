@@ -762,7 +762,7 @@
             </div>
             <div class="project-links">
               <a href="https://github.com/ljl3133892273-png/customer-service-backend" class="btn-outline" target="_blank" rel="noopener">查看源码</a>
-              <a class="btn-demo" data-demo="customer-service" href="http://81.70.85.14:8092/" target="_blank" rel="noopener"><span class="demo-dot"></span><span data-demo-text>访问线上系统</span></a>
+              <a class="btn-demo" data-demo="customer-service" href="http://120.46.141.142:8081/" target="_blank" rel="noopener"><span class="demo-dot"></span><span data-demo-text>访问线上系统</span></a>
             </div>
           </div>
         </div>
@@ -810,7 +810,7 @@
             </div>
             <div class="project-links">
               <a href="https://github.com/ljl3133892273-png/knowledge_base" class="btn-outline" target="_blank" rel="noopener">查看源码</a>
-              <a class="btn-demo" data-demo="knowledge-base" href="http://81.70.85.14:8095/" target="_blank" rel="noopener"><span class="demo-dot"></span><span data-demo-text>访问线上系统</span></a>
+              <a class="btn-demo" data-demo="knowledge-base" href="http://120.46.141.142:8083/" target="_blank" rel="noopener"><span class="demo-dot"></span><span data-demo-text>访问线上系统</span></a>
             </div>
           </div>
         </div>
@@ -858,7 +858,7 @@
             </div>
             <div class="project-links">
               <a href="https://github.com/ljl3133892273-png/data-agent" class="btn-outline" target="_blank" rel="noopener">查看源码</a>
-              <a class="btn-demo" data-demo="data-agent" href="http://81.70.85.14:8094/" target="_blank" rel="noopener"><span class="demo-dot"></span><span data-demo-text>访问线上系统</span></a>
+              <a class="btn-demo" data-demo="data-agent" href="http://120.46.141.142:8082/" target="_blank" rel="noopener"><span class="demo-dot"></span><span data-demo-text>访问线上系统</span></a>
             </div>
           </div>
         </div>
@@ -1068,26 +1068,29 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
       el.removeAttribute('title');
       setTag(el, 'is-on', '在线');
     } else {
-      if (label) label.textContent = '演示环境暂未启动';
-      if (el.getAttribute('href')) el.setAttribute('data-demo-href', el.getAttribute('href'));
-      el.removeAttribute('href');
-      el.setAttribute('aria-disabled', 'true');
-      el.setAttribute('title', '服务暂未启动，需要演示时联系我开启');
-      setTag(el, 'is-off', '按需启动');
+      // 探测失败也保留链接：宁可让访客自己点一下看到结果，
+      // 也不能因为探测侧的一次抖动把正在运行的服务锁在门外。
+      if (label) label.textContent = '访问线上系统';
+      el.setAttribute('title', '本次探测未连通，服务可能正在重启，可直接点击重试');
+      setTag(el, 'is-off', '可能未启动');
     }
   }
 
-  // 状态数据的新鲜度上限（秒）。超过就认为数据过期，按钮一律保持可点，
-  // 只把胶囊标成「状态未知」——宁可放过，也不能因为探测停了把在线服务显示成灰的。
-  var FRESH = 5400;
+  // 状态数据的新鲜度上限（秒）。超过就认为数据过期。
+  // 三个演示服务已迁到华为云常驻运行（restart: unless-stopped），
+  // 探测数据陈旧只说明 GitHub 定时任务被限流，并不代表服务挂了，
+  // 所以把阈值放宽到 6 小时，避免正常在线的按钮被误标成灰。
+  var FRESH = 21600;
 
-  // 中性态：不改动 href，按钮照常可点
+  // 中性态：不改动 href，按钮照常可点，且保持「亮」的观感
   function neutral(el) {
-    el.classList.remove('is-on', 'is-off');
+    el.classList.remove('is-off');
+    el.classList.add('is-on');
     var label = el.querySelector('[data-demo-text]');
     if (label) label.textContent = '访问线上系统';
     el.removeAttribute('aria-disabled');
-    setTag(el, 'is-unknown', '状态未知');
+    el.setAttribute('title', '服务常驻运行中；探测数据暂未刷新');
+    setTag(el, 'is-on', '在线');
   }
 
   function fetchStatus(i) {

@@ -31,11 +31,13 @@ jobs:
         shell: bash
         run: |
           # 顺序与作品集页面上的项目顺序一致
+          # 客服 / RAG / 问数 三个服务已迁到华为云 Flexus（常驻，restart: unless-stopped），
+          # 不再依赖本机反向隧道，因此指向新公网地址。
           declare -A TARGETS=(
             ["operation-assistant"]="http://81.70.85.14:8093/"
-            ["customer-service"]="http://81.70.85.14:8092/"
-            ["knowledge-base"]="http://81.70.85.14:8095/"
-            ["data-agent"]="http://81.70.85.14:8094/"
+            ["customer-service"]="http://120.46.141.142:8081/"
+            ["knowledge-base"]="http://120.46.141.142:8083/"
+            ["data-agent"]="http://120.46.141.142:8082/"
             ["octop-plugin"]="http://81.70.85.14:8088/"
           )
 
