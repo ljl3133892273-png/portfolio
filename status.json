@@ -1,8 +1,8 @@
 {
   "customer-service": true,
   "data-agent": true,
-  "operation-assistant": true,
-  "octop-plugin": true,
+  "operation-assistant": false,
+  "octop-plugin": false,
   "knowledge-base": true,
-  "updated_at": 1794354112
+  "updated_at": 1794366308
 }
